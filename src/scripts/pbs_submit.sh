@@ -113,6 +113,19 @@ bls_local_submit_attributes_file=${blah_libexec_directory}/pbs_local_submit_attr
 
 bls_set_up_local_and_extra_args
 
+if [ "x$bls_opt_req_mem" != "x" ]
+then
+  # Different schedulers require different memory checks
+  echo "#PBS -l mem=$bls_opt_req_mem" >> $bls_tmp_file
+  echo "#PBS -l pmem=$bls_opt_req_mem" >> $bls_tmp_file
+  echo "#PBS -l pvmem=$bls_opt_req_mem" >> $bls_tmp_file
+fi
+
+if [ "x$bls_opt_req_walltime" != "x" ]
+then
+  echo "#PBS -l walltime=$bls_opt_req_walltime" >> $bls_tmp_file
+fi
+
 # Write PBS directives according to command line options
 # handle queue overriding
 [ -z "$bls_opt_queue" ] || grep -q "^#PBS -q" $bls_tmp_file || echo "#PBS -q $bls_opt_queue" >> $bls_tmp_file
