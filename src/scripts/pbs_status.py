@@ -312,7 +312,7 @@ def fill_cache(cache_location):
     log("Starting query to fill cache.")
     results = qstat()
     log("Finished query to fill cache.")
-    (fd, filename) = tempfile.mkstemp()
+    (fd, filename) = tempfile.mkstemp(dir='/var/tmp')
     try:
         for key, val in results.items():
             key = key.split(".")[0]
