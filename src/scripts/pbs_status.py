@@ -39,6 +39,7 @@ import random
 import struct
 import signal
 import tempfile
+import shutil
 
 cache_timeout = 60
 
@@ -322,7 +323,7 @@ def fill_cache(cache_location):
     except:
         os.unlink(filename)
         raise
-    os.rename(filename, cache_location)
+    shutil.move(filename, cache_location)
     global launchtime
     launchtime = time.time()
 
