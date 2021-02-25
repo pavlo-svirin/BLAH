@@ -41,7 +41,8 @@ find_path(ClassAd_INCLUDE_DIR
 message(STATUS "ClassAd_INCLUDE_DIR == " ${ClassAd_INCLUDE_DIR})
 
 # The ClassAd library (should have namespaces enabled).
-set (ClassAd_LIBRARY_TO_FIND classad_ns)
+#set (ClassAd_LIBRARY_TO_FIND classad_ns)
+set (ClassAd_LIBRARY_TO_FIND classad)
 
 # Setting some more prefixes for the library
 set (ClassAd_LIB_PREFIX "")
