@@ -42,8 +42,9 @@ set (bupdater_common_sources
 
 # programs for 'sbin'
 add_executable(blahpd_daemon main_daemon.c ${main_common_sources})
-set_target_properties(blahpd_daemon PROPERTIES COMPILE_FLAGS ${ClassAd_CXX_FLAGS}) 
-target_link_libraries(blahpd_daemon -lpthread ${ClassAd_LIBRARY})
+set_target_properties(blahpd_daemon PROPERTIES COMPILE_FLAGS "${ClassAd_CXX_FLAGS}") 
+#target_link_libraries(blahpd_daemon -lpthread ${ClassAd_LIBRARY})
+target_link_libraries(blahpd_daemon -lpthread ${ClassAd_LIBRARY} -lglobus_gsi_proxy_core -lglobus_thread_pthread -lglobus_common -lglobus_gsi_credential)
 add_executable(blah_job_registry_add 
     blah_job_registry_add.c job_registry.c 
     job_registry_updater.c md5.c config.c)
@@ -52,7 +53,7 @@ add_executable(blah_job_registry_lkup
 add_executable(blah_job_registry_scan_by_subject 
     blah_job_registry_scan_by_subject.c classad_c_helper.C
     classad_binary_op_unwind.C job_registry.c md5.c config.c)
-set_target_properties(blah_job_registry_scan_by_subject PROPERTIES COMPILE_FLAGS ${ClassAd_CXX_FLAGS}) 
+set_target_properties(blah_job_registry_scan_by_subject PROPERTIES COMPILE_FLAGS "${ClassAd_CXX_FLAGS}") 
 target_link_libraries(blah_job_registry_scan_by_subject ${ClassAd_LIBRARY})
 add_executable(blah_check_config
     blah_check_config.c Bfunctions.c config.c blah_utils.c)
@@ -63,8 +64,9 @@ add_executable(blah_job_registry_purge
 
 # programs for 'bin'
 add_executable(blahpd main.c ${main_common_sources})
-set_target_properties(blahpd PROPERTIES COMPILE_FLAGS ${ClassAd_CXX_FLAGS}) 
-target_link_libraries(blahpd -lpthread ${ClassAd_LIBRARY})
+set_target_properties(blahpd PROPERTIES COMPILE_FLAGS "${ClassAd_CXX_FLAGS}") 
+#target_link_libraries(blahpd -lpthread ${ClassAd_LIBRARY})
+target_link_libraries(blahpd -lpthread ${ClassAd_LIBRARY} -lglobus_gsi_proxy_core -lglobus_thread_pthread -lglobus_common -lglobus_gsi_credential)
 
 # programs for 'libexec'
 add_executable(BLClient BLClient.c blah_utils.c BLfunctions.c)
@@ -87,17 +89,17 @@ add_executable(BUpdaterSGE
 add_executable(blparser_master blparser_master.c config.c blah_utils.c)
 
 if (${GLOBUS_COMMON_FOUND} AND ${GLOBUS_IO_FOUND})
-add_executable(BPRclient BPRclient.c BPRcomm.c tokens.c)
-target_link_libraries(BPRclient 
-  ${GLOBUS_GSI_PROXY_CORE_LDFLAGS}
-  ${GLOBUS_GSI_CREDENTIALS_LDFLAGS}
-  ${GLOBUS_GSS_ASSIST_LDFLAGS})
-add_executable(BPRserver BPRserver.c BPRcomm.c tokens.c)
-target_link_libraries(BPRserver
-  ${GLOBUS_GSI_PROXY_CORE_LDFLAGS}
-  ${GLOBUS_GSI_CREDENTIALS_LDFLAGS}
-  ${GLOBUS_GSS_ASSIST_LDFLAGS})
-set_target_properties(BPRserver PROPERTIES COMPILE_FLAGS "-static") 
+	#add_executable(BPRclient BPRclient.c BPRcomm.c tokens.c)
+	#target_link_libraries(BPRclient 
+	#${GLOBUS_GSI_PROXY_CORE_LDFLAGS}
+	#${GLOBUS_GSI_CREDENTIALS_LDFLAGS}
+	#${GLOBUS_GSS_ASSIST_LDFLAGS})
+	#add_executable(BPRserver BPRserver.c BPRcomm.c tokens.c)
+	#target_link_libraries(BPRserver
+	#${GLOBUS_GSI_PROXY_CORE_LDFLAGS}
+	#${GLOBUS_GSI_CREDENTIALS_LDFLAGS}
+	#${GLOBUS_GSS_ASSIST_LDFLAGS})
+	#set_target_properties(BPRserver PROPERTIES COMPILE_FLAGS "-static") 
 endif (${GLOBUS_COMMON_FOUND} AND ${GLOBUS_IO_FOUND})
 
 # test programs
@@ -145,6 +147,7 @@ set(blah_scripts
     scripts/blah.py scripts/__init__.py
     scripts/pbs_status.py
     scripts/slurm_status.py
+    scripts/panda_submit.sh scripts/panda_status.sh scripts/panda_cancel.sh
    )
 
 install(FILES
@@ -155,7 +158,7 @@ install(FILES
     DESTINATION libexec)
 
 if (${GLOBUS_COMMON_FOUND} AND ${GLOBUS_IO_FOUND})
-install(TARGETS BPRclient BPRserver RUNTIME DESTINATION libexec)
+	#install(TARGETS BPRclient BPRserver RUNTIME DESTINATION libexec)
 endif (${GLOBUS_COMMON_FOUND} AND ${GLOBUS_IO_FOUND})
 
 include(CPack)
