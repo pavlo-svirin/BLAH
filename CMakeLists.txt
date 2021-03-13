@@ -56,7 +56,7 @@ set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE
 
 add_subdirectory(src build)
 add_subdirectory(config)
-add_subdirectory(doc)
+#add_subdirectory(doc)
 
 install(FILES LICENSE 
     DESTINATION share/doc/${CMAKE_PROJECT_NAME}-${CPACK_PACKAGE_VERSION})
